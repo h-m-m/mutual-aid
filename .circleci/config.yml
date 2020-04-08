@@ -1,5 +1,7 @@
 docker_image: &docker_image
   image: circleci/ruby:2.7.0-node
+db_image: &db_image
+  image: circleci/postgres:latest
 
 version: 2.1
 commands:
@@ -64,11 +66,10 @@ jobs:
       - <<: *docker_image
         environment:
           RAILS_ENV: test
-      - image: circleci/postgres:latest
+      - <<: *db_image
         environment:
           POSTGRES_USER: circleci
           POSTGRES_DB: mutualaid_test
-          POSTGRES_HOST_AUTH_METHOD: trust
     steps:
       - checkout
       - test_suite
