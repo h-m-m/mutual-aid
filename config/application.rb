@@ -31,5 +31,11 @@ module Mutualaid
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    if ENV['EMAIL_LINK_PORT'].blank?
+      config.action_mailer.default_url_options = { host: ENV.fetch('EMAIL_LINK_HOSTNAME', 'localhost') }
+    else
+      config.action_mailer.default_url_options = { host: ENV.fetch('EMAIL_LINK_HOSTNAME', 'localhost'), port: ENV['EMAIL_LINK_PORT'] }
+    end
   end
 end

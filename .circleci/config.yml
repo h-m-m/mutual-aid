@@ -1,7 +1,12 @@
 docker_image: &docker_image
   image: circleci/ruby:2.7.0-node
+
+# pinning this at 12.2, which is the current latest available on circleci
+# and should also be the current latest on Heroku
 db_image: &db_image
-  image: circleci/postgres:latest
+  image: circleci/postgres:12.2
+
+
 
 version: 2.1
 commands:
@@ -70,6 +75,7 @@ jobs:
         environment:
           POSTGRES_USER: circleci
           POSTGRES_DB: mutualaid_test
+          POSTGRES_HOST_AUTH_METHOD: trust
     steps:
       - checkout
       - test_suite
